@@ -1,16 +1,8 @@
-# This is a sample Python script.
+from linkedin_api import Linkedin
+from os import environ
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+api = Linkedin(environ.get('LINKEDIN_USR'), environ.get('LINKEDIN_PWD'))
+searchResult = api.search_people('Mark Zilber')
+print(searchResult)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
