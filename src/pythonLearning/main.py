@@ -35,6 +35,19 @@ if not client.is_user_authorized():
     except SessionPasswordNeededError:
         client.sign_in(password=input('Password: '))
 
+
+    # some functions to parse json date
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+
+        if isinstance(o, bytes):
+            return list(o)
+
+        return json.JSONEncoder.default(self, o)
+
+
 me = client.get_me()
 
 
@@ -44,17 +57,6 @@ async def dump_all_messages(channel):
     all_messages = []
     total_messages = 1
     total_count_limit = 1
-
-    # some functions to parse json date
-    class DateTimeEncoder(json.JSONEncoder):
-        def default(self, o):
-            if isinstance(o, datetime):
-                return o.isoformat()
-
-            if isinstance(o, bytes):
-                return list(o)
-
-            return json.JSONEncoder.default(self, o)
 
     while True:
         history = await client(GetHistoryRequest(
